@@ -25,6 +25,7 @@ canvas {
     justify-content: center;
     position: relative;
     z-index: 1;
+    transform: translateY(-20%);
 }
 .loading-text {
     color: #fff;
@@ -94,8 +95,8 @@ function animate() {
     requestAnimationFrame(animate);
     sphere.rotation.y += 0.01;
     renderer.render(scene, camera);
-    if (camera.position.z < 5) {
-        camera.position.z += 0.005;
+    if (camera.position.z < 1) { // Decreased from 5 to 1
+        camera.position.z += 0.001; // Decreased from 0.005 to 0.001
     }
 }
 animate();
