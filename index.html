@@ -1,123 +1,115 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Sphere</title>
-        <style>
-            body { 
-                margin: 0; 
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                background-color: #000;
-                color: #fff;
-                overflow: hidden;
-            }
-            canvas { 
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-            h1 {
-                position: relative;
-                z-index: 1;
-            }
-            .loading-text {
-            color: #fff;
-                z-index: 1;
-            font-size: 2vw; /* Reduced font size */
-            font-family: Arial, sans-serif; /* Changed font family */
-            margin-top: 1vw; /* Responsive margin */
-            text-shadow: 0.3vw 0.3vw 0.3vw rgba(0, 0, 0, 0.3); /* Responsive text shadow */
-            animation: loading-text 1s infinite; /* Added animation */
-        }
-
-        .loading-bar {
-            z-index: 1;
-            width: 20vw; /* Responsive width */
-            height: 2vw; /* Responsive height */
-            background: #333;
-            margin-top: 1vw; /* Responsive margin */
-            position: relative;
-            border-radius: 1vw; /* Responsive border radius */
-            overflow: hidden; /* Hide the parts of the filler that are outside the loading bar */
-            border: 0.2vw solid #fff; /* Responsive white border */
-        }
-
-        .loading-bar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 50%;
-            background: linear-gradient(to right, darkblue, rgb(27, 6, 61)); /* Gradient color */
-            animation: loading 2s infinite;
-            border-radius: 1vw; /* Responsive border radius */
-                }
-            @keyframes loading {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(150%); }
-        }
-
-        @keyframes loading-text {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        </style>
-    </head>
-    <body>
-        <div class="loading-text">Loading...</div>
-        <div class="loading-bar"></div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <script>
-            // Create a scene
-            var scene = new THREE.Scene();
-
-            // Create a camera
-            var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 0.1;
-
-            // Create a renderer
-            var renderer = new THREE.WebGLRenderer({ alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-
-            // Create a geometry
-            var geometry = new THREE.SphereGeometry(1, 32, 32);
-
-            // Create a material
-            var material = new THREE.PointsMaterial({color: 0x000000, size: 0.05});
-
-            // Create a points (dots) object
-            var sphere = new THREE.Points(geometry, material);
-
-            // Add the sphere to the scene
-            scene.add(sphere);
-
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-                sphere.rotation.y += 0.01;
-                renderer.render(scene, camera);
-                if (camera.position.z < 5) {
-                    camera.position.z += 0.005;  // Decreased from 0.01 to 0.005
-                }
-            }
-            animate();
-
-            // Color change
-            var color = {r: 0, g: 0, b: 0};
-            setInterval(function() {
-                color.r += 0.01;
-                color.g += 0.01;
-                color.b += 0.01;
-                if (color.r > 1) color.r = 0;
-                if (color.g > 1) color.g = 0;
-                if (color.b > 1) color.b = 0;
-                sphere.material.color.setRGB(color.r, color.g, color.b);
-            }, 500);
-        </script>
-    </body>
+<head>
+<title>Sphere</title>
+<style>
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+}
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+.loading-text {
+    color: #fff;
+    font-size: 2vw;
+    font-family: Arial, sans-serif;
+    text-shadow: 0.3vw 0.3vw 0.3vw rgba(0, 0, 0, 0.3);
+    animation: loading-text 1s infinite;
+}
+.loading-bar {
+    width: 20vw;
+    height: 2vw;
+    background: #333;
+    margin-top: 1vw;
+    position: relative;
+    border-radius: 1vw;
+    overflow: hidden;
+    border: 0.2vw solid #fff;
+}
+.loading-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(to right, darkblue, rgb(27, 6, 61));
+    animation: loading 2s infinite;
+    border-radius: 1vw;
+}
+@keyframes loading {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(150%); }
+}
+@keyframes loading-text {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="loading-container">
+    <div class="loading-text">Loading...</div>
+    <div class="loading-bar"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// Create a scene
+var scene = new THREE.Scene();
+// Create a camera
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 0.1;
+// Create a renderer
+var renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+// Create a geometry
+var geometry = new THREE.SphereGeometry(1, 32, 32);
+// Create a material
+var material = new THREE.PointsMaterial({color: 0x000000, size: 0.05});
+// Create a points (dots) object
+var sphere = new THREE.Points(geometry, material);
+// Add the sphere to the scene
+scene.add(sphere);
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+    sphere.rotation.y += 0.01;
+    renderer.render(scene, camera);
+    if (camera.position.z < 5) {
+        camera.position.z += 0.005;
+    }
+}
+animate();
+// Color change
+var color = {r: 0, g: 0, b: 0};
+setInterval(function() {
+    color.r += 0.01;
+    color.g += 0.01;
+    color.b += 0.01;
+    if (color.r > 1) color.r = 0;
+    if (color.g > 1) color.g = 0;
+    if (color.b > 1) color.b = 0;
+    sphere.material.color.setRGB(color.r, color.g, color.b);
+}, 500);
+</script>
+</body>
 </html>
