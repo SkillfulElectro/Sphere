@@ -22,9 +22,52 @@
                 position: relative;
                 z-index: 1;
             }
+            .loading-text {
+            color: #fff;
+            font-size: 2vw; /* Reduced font size */
+            font-family: Arial, sans-serif; /* Changed font family */
+            margin-top: 1vw; /* Responsive margin */
+            text-shadow: 0.3vw 0.3vw 0.3vw rgba(0, 0, 0, 0.3); /* Responsive text shadow */
+            animation: loading-text 1s infinite; /* Added animation */
+        }
+
+        .loading-bar {
+            width: 20vw; /* Responsive width */
+            height: 2vw; /* Responsive height */
+            background: #333;
+            margin-top: 1vw; /* Responsive margin */
+            position: relative;
+            border-radius: 1vw; /* Responsive border radius */
+            overflow: hidden; /* Hide the parts of the filler that are outside the loading bar */
+            border: 0.2vw solid #fff; /* Responsive white border */
+        }
+
+        .loading-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(to right, darkblue, rgb(27, 6, 61)); /* Gradient color */
+            animation: loading 2s infinite;
+            border-radius: 1vw; /* Responsive border radius */
+                }
+            @keyframes loading {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(150%); }
+        }
+
+        @keyframes loading-text {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
         </style>
     </head>
     <body>
+        <div class="loading-text">Loading...</div>
+        <div class="loading-bar"></div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <script>
             // Create a scene
